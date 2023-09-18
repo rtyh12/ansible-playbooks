@@ -1,0 +1,24 @@
+- name: Perform initial setup
+  hosts: all
+  tasks:
+    - name: Upgrade system to latest package versions
+      become: true
+      ansible.builtin.apt:
+        upgrade: "yes"
+        update_cache: yes
+    
+    - name: Reboot
+      ansible.builtin.reboot:
+
+- name: Install nice to have packages
+  hosts: all
+  tasks:
+    - name: Install
+      ansible.builtin.package:
+        name:
+          - docker.io
+          - fish
+          - exa
+          - micro
+        state: latest
+        update-cache: true

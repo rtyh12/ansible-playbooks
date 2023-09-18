@@ -1,0 +1,20 @@
+- name: Setup users and user environments
+  hosts: all
+  tasks:
+    - name: Add user cass
+      ansible.builtin.user:
+        name: cass
+        shell: /bin/fish
+        groups: sudo
+  
+    - ansible.builtin.include_tasks:
+        file: ../tasks/user-env.yml
+      loop:
+        - { username: 'root', homedir: '/root' }
+        - { username: 'cass', homedir: '/home/cass' }
+    
+    # - name: Set key for user cass
+    #   ansible.posix.authorized_key:
+    #     user: cass
+    #     state: present
+    #     key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

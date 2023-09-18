@@ -1,0 +1,7 @@
+- name: Setup web infrastructure
+  hosts: all
+  tasks:
+    - name: Pull triocards
+      git:
+        repo: https://github.com/rtyh12/triocards
+        dest: ~/apps/triocards
