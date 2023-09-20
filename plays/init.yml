@@ -20,5 +20,6 @@
           - fish
           - exa
           - micro
+          - build-essential
         state: latest
         update-cache: true

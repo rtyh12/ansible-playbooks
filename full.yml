@@ -1,5 +1,8 @@
-- name: Perform initial one-time setup
-  ansible.builtin.import_playbook: plays/init.yml
+# - name: Perform initial one-time setup
+#   ansible.builtin.import_playbook: plays/init.yml
+
+- name: Install rust
+  ansible.builtin.import_playbook: plays/install-rust.yml
 
 - name: Setup users and user environments
   ansible.builtin.import_playbook: plays/users.yml
