@@ -1,7 +1,7 @@
 - name: Setup web infrastructure
   hosts: all
   tasks:
-    - name: Add user nginx (TODO: is this necessary?)
+    - name: Add user nginx (TODO is this necessary?)
       ansible.builtin.user:
         name: nginx
         shell: /sbin/nologin

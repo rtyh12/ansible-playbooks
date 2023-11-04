@@ -2,6 +2,7 @@
   hosts: all
   tasks:
     - name: Add user cass
+      become: true
       ansible.builtin.user:
         name: cass
         shell: /bin/fish

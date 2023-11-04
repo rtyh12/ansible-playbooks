@@ -8,18 +8,33 @@
         update_cache: yes
     
     - name: Reboot
+      become: true
       ansible.builtin.reboot:
 
 - name: Install nice to have packages
   hosts: all
   tasks:
+    - name: Add eza gpg key
+      become: true
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/eza-community/eza/main/deb.asc
+        dest: /etc/apt/keyrings/gierens.asc
+        mode: '0644'
+        force: true
+    - name: Add eza repo
+      become: true
+      ansible.builtin.apt_repository:
+        repo: deb [signed-by=/etc/apt/keyrings/gierens.asc] http://deb.gierens.de stable main
+        state: present
     - name: Install
+      become: true
       ansible.builtin.package:
         name:
           - docker.io
           - fish
-          - exa
+          - eza
           - micro
           - build-essential
         state: latest
         update-cache: true
+  

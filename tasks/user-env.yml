@@ -1,18 +1,30 @@
 - name: Delete dotfiles for {{ item.username }}
+  become: true
   ansible.builtin.file:
     path: "{{ item.homedir }}/.dotfiles"
     state: absent
 
 - name: Clone dotfiles for {{ item.username }}
+  become: true
   ansible.builtin.command: git clone --bare https://github.com/rtyh12/dotfiles {{ item.homedir }}/.dotfiles
   
 - name: Checkout dotfiles for {{ item.username }}
+  become: true
   ansible.builtin.command:
     # chdir: /root
     cmd: git --git-dir={{ item.homedir }}/.dotfiles --work-tree={{ item.homedir }} checkout -f
 
 - name: Change shell to fish for {{ item.username }}
-  become: yes
+  become: true
   user:
     name: "{{ item.username }}" 
     shell: /bin/fish
+
+- name: chmod {{ item.homedir }} to user
+  become: true
+  ansible.builtin.file:
+    path: "{{ item.homedir }}"
+    state: directory
+    recurse: yes
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
