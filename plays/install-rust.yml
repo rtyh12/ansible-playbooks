@@ -5,7 +5,7 @@
   become: true
 
   tasks:
-  - name: check if cargo is installed
+  - name: check if cargo is installed - task is meant to fail if not installed
     shell: command -v cargo
     register: cargo_exists
     ignore_errors: yes

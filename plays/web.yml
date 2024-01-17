@@ -2,12 +2,14 @@
   hosts: all
   tasks:
     - name: Add user nginx (TODO is this necessary?)
+      become: true
       ansible.builtin.user:
         name: nginx
         shell: /sbin/nologin
         create_home: no
   
     - name: Install nginx
+      become: true
       ansible.builtin.package:
         name:
           - nginx
@@ -17,19 +19,19 @@
     - name: Pull web-config
       git:
         repo: https://github.com/rtyh12/web-config
-        dest: ~/apps/web-config
+        dest: /home/cass/apps/web-config
 
     - name: Install nginx config from web-config
       ansible.builtin.command:
-        chdir: ~/apps/web-config
+        chdir: /home/cass/apps/web-config
         cmd: /home/apps/web-config/install.sh
 
     - name: Pull triocards
       git:
         repo: https://github.com/rtyh12/triocards
-        dest: ~/apps/triocards
+        dest: /home/cass/apps/triocards
 
     - name: Pull rust-social
       git:
         repo: https://github.com/rtyh12/rust-social
-        dest: ~/apps/rust-social
+        dest: /home/cass/apps/rust-social
